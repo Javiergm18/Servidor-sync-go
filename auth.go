@@ -1,3 +1,4 @@
+// auth.go
 package main
 
 import (
@@ -14,7 +15,7 @@ type Claims struct {
 	jwt.StandardClaims
 }
 
-// Funciones de generación de tokens y middleware
+// Generar JWT
 func GenerateJWT(username string) (string, error) {
 	expirationTime := time.Now().Add(1 * time.Hour)
 	claims := &Claims{
@@ -28,7 +29,7 @@ func GenerateJWT(username string) (string, error) {
 	return token.SignedString(jwtKey)
 }
 
-// Middleware JWT
+// Middleware para autenticación
 func JWTMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		tokenString := r.Header.Get("Authorization")
@@ -51,12 +52,13 @@ func JWTMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
+// Manejo de login
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		username := r.FormValue("username")
 		password := r.FormValue("password")
 
-		// Validar usuario (esto debe conectarse a un sistema de usuarios)
+		// Aquí deberías validar el usuario, por simplicidad usaré un valor fijo
 		if username == "admin" && password == "password" {
 			token, err := GenerateJWT(username)
 			if err != nil {
