@@ -62,8 +62,7 @@ func UploadFileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	// Aquí deberías obtener el idcreador del token JWT, por simplicidad, usaré un valor fijo
-	idcreador := 1 // Cambia esto según tu lógica de autenticación
+	idcreador := 1 // Cambiar esto según lógica de autenticación
 
 	_, err = db.Exec("INSERT INTO Archivos (nombre, extension, path, tamano, idcreador) VALUES (?, ?, ?, ?, ?)",
 		header.Filename, filepath.Ext(header.Filename), filePath, header.Size, idcreador)
@@ -153,7 +152,7 @@ func SyncDirectoryHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Guardar metadatos en la base de datos
-		idcreador := 1 // Cambia esto según tu lógica de autenticación
+		idcreador := 1 // Cambiar esto según  lógica de autenticación
 
 		_, err = db.Exec("INSERT INTO Archivos (nombre, extension, path, tamano, idcreador) VALUES (?, ?, ?, ?, ?)",
 			fileHeader.Filename, filepath.Ext(fileHeader.Filename), filePath, fileHeader.Size, idcreador)

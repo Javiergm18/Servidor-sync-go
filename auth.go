@@ -58,7 +58,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		username := r.FormValue("username")
 		password := r.FormValue("password")
 
-		// Aquí deberías validar el usuario, por simplicidad usaré un valor fijo
+		//  validar el usuario
 		if username == "admin" && password == "password" {
 			token, err := GenerateJWT(username)
 			if err != nil {
